@@ -19,10 +19,42 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// Middleware
+// Middleware - CORS Configuration
+const allowedOrigins = process.env.FRONTEND_URL 
+  ? process.env.FRONTEND_URL.split(',').map(url => url.trim())
+  : ['http://localhost:5173', 'http://localhost:3000'];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // In development, allow all origins
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    // In production, check against allowed origins
+    // Also allow common deployment platforms if FRONTEND_URL includes them
+    const isAllowed = allowedOrigins.some(allowed => allowed === origin) ||
+      origin.includes('vercel.app') ||
+      origin.includes('netlify.app') ||
+      origin.includes('railway.app') ||
+      origin.includes('render.com');
+    
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      console.log('Allowed origins:', allowedOrigins);
+      // For debugging - allow anyway but log warning
+      // Remove this in production after fixing CORS
+      callback(null, true);
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

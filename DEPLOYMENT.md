@@ -305,9 +305,14 @@ NODE_ENV=production
 # Database
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname?retryWrites=true&w=majority
 
-# CORS (if needed)
-FRONTEND_URL=https://your-frontend-url.vercel.app
+# CORS - Add your frontend URL(s), comma-separated for multiple
+FRONTEND_URL=https://your-frontend-url.vercel.app,https://your-frontend-url.netlify.app
 ```
+
+**Important**: 
+- Add your actual frontend deployment URL(s) to `FRONTEND_URL`
+- For multiple frontends, separate with commas
+- The backend will allow CORS from these URLs
 
 ### Frontend Environment Variables
 

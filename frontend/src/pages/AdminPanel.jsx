@@ -101,41 +101,65 @@ export default function AdminPanel() {
 
   const fetchProjects = async () => {
     try {
+      console.log('Fetching projects from:', `${API_BASE_URL}/projects`)
       const response = await fetch(`${API_BASE_URL}/projects`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
       setProjects(data)
     } catch (error) {
       console.error('Error fetching projects:', error)
+      console.error('API_BASE_URL:', API_BASE_URL)
+      addToast('Failed to load projects. Please check your connection.', 'error')
     }
   }
 
   const fetchClients = async () => {
     try {
+      console.log('Fetching clients from:', `${API_BASE_URL}/clients`)
       const response = await fetch(`${API_BASE_URL}/clients`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
       setClients(data)
     } catch (error) {
       console.error('Error fetching clients:', error)
+      console.error('API_BASE_URL:', API_BASE_URL)
+      addToast('Failed to load clients. Please check your connection.', 'error')
     }
   }
 
   const fetchContacts = async () => {
     try {
+      console.log('Fetching contacts from:', `${API_BASE_URL}/contacts`)
       const response = await fetch(`${API_BASE_URL}/contacts`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
       setContacts(data)
     } catch (error) {
       console.error('Error fetching contacts:', error)
+      console.error('API_BASE_URL:', API_BASE_URL)
+      addToast('Failed to load contacts. Please check your connection.', 'error')
     }
   }
 
   const fetchNewsletters = async () => {
     try {
+      console.log('Fetching newsletters from:', `${API_BASE_URL}/newsletters`)
       const response = await fetch(`${API_BASE_URL}/newsletters`)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
       setNewsletters(data)
     } catch (error) {
       console.error('Error fetching newsletters:', error)
+      console.error('API_BASE_URL:', API_BASE_URL)
+      addToast('Failed to load newsletters. Please check your connection.', 'error')
     }
   }
 
